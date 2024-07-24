@@ -35,6 +35,12 @@ impl Default for Config {
     }
 }
 
+impl Config {
+    pub fn new(sync: &'static [u8], type_check: bool) -> Self {
+        Self { sync, type_check }
+    }
+}
+
 /// Represents a packet reader
 pub struct PacketReader {
     state: ReadState,
