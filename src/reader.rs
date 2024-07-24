@@ -154,7 +154,7 @@ impl PacketReader {
         (packet, reader.remaining())
     }
 
-    /// Returns an interator over the given buffer. If the buffer contains packet of a valid format,
+    /// Returns an iterator over the given buffer. If the buffer contains packet of a valid format,
     /// the iterator will return `Ok(RawPacket)`. If the buffer contains invalid packets, the iterator
     /// will return `Err(Error)`. If the buffer is too small to parse, the iterator will yield.
     /// Once the iterator yields, all bytes in the buffer have been consumed.
@@ -175,7 +175,7 @@ impl PacketReader {
     }
 }
 
-/// An iterator over a buffer that yield `RawPacket` instances, or `Error` in case of currupt data.
+/// An iterator over a buffer that yield `RawPacket` instances, or `Error` in case of corrupt data.
 /// This iterator will consume the and process the entire buffer. For an iterator that also parses the
 /// packets into `Packet` instances, use `IterPackets` instead.
 pub struct IterRawPackets<'a, 'b> {
@@ -196,7 +196,7 @@ impl<'a, 'b> Iterator for IterRawPackets<'a, 'b> {
     }
 }
 
-/// An iterator over a buffer that return parsed `Packet` instances, or `Error` in case of currupt data.
+/// An iterator over a buffer that return parsed `Packet` instances, or `Error` in case of corrupt data.
 /// This iterator will consume the and process the entire buffer.
 pub struct IterPackets<'a, 'b> {
     parser: &'a mut PacketReader,
@@ -297,7 +297,7 @@ mod tests {
                     Ok(Packet::RcChannelsPacked(rc_channels)) => {
                         assert_eq!(rc_channels, RcChannelsPacked([0u16; 16]))
                     }
-                    e => panic!("This data should parse succesfully: {e:?}, {i}, {j}"),
+                    e => panic!("This data should parse successfully: {e:?}, {i}, {j}"),
                 }
             }
         }
