@@ -1,3 +1,5 @@
+const CRSF_CRC_POLY: u8 = 0xd5;
+
 /// Create a new look-up table for the CRC8 algorithm.
 pub(crate) const fn new_crc8_lut() -> [u8; 256] {
     let mut crc_table = [0u8; 256];
@@ -8,7 +10,7 @@ pub(crate) const fn new_crc8_lut() -> [u8; 256] {
         let mut j = 0;
         while j < 8 {
             if crc & 0x80 != 0 {
-                crc = (crc << 1) ^ 0xd5;
+                crc = (crc << 1) ^ CRSF_CRC_POLY;
             } else {
                 crc <<= 1;
             }

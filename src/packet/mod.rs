@@ -7,7 +7,9 @@ mod typ;
 pub use typ::PacketType;
 
 pub mod payload;
-pub use payload::{AnyPayload, DevicePing, ExtendedPayload, LinkStatistics, Payload, RcChannelsPacked};
+pub use payload::{
+    AnyPayload, DeviceInfo, DevicePing, ExtendedPayload, LinkStatistics, ParameterRead, Payload, RcChannelsPacked,
+};
 
 /// Represents a packet
 #[non_exhaustive]
@@ -28,6 +30,8 @@ pub enum Packet {
 #[cfg_attr(feature = "defmt", derive(defmt::Format))]
 pub enum ExtendedPacket {
     DevicePing(DevicePing),
+    DeviceInfo(DeviceInfo),
+    ParameterRead(ParameterRead),
 }
 
 /// Represents a raw packet (not parsed)
@@ -80,6 +84,10 @@ impl RawPacket {
                         let src = PacketAddress::try_from(*src).map_err(|_| Error::InvalidAddress { addr: *src })?;
                         match typ {
                             PacketType::DevicePing => DevicePing::decode(payload).map(ExtendedPacket::DevicePing),
+                            PacketType::DeviceInfo => DeviceInfo::decode(payload).map(ExtendedPacket::DeviceInfo),
+                            PacketType::ParameterRead => {
+                                ParameterRead::decode(payload).map(ExtendedPacket::ParameterRead)
+                            }
                             _ => Err(Error::UnimplementedType { typ }),
                         }
                         .map(|packet| Packet::Extended { src, dst, packet })

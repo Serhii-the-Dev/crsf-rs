@@ -13,6 +13,12 @@ pub use rc_channels_packed::RcChannelsPacked;
 pub mod device_ping;
 pub use device_ping::DevicePing;
 
+pub mod device_info;
+pub use device_info::DeviceInfo;
+
+pub mod parameter_read;
+pub use parameter_read::ParameterRead;
+
 /// A trait encapsulationg a CRSF payload. This trait is used to encode and decode payloads
 /// to and from byte slices, as well as convert into a [`RawPacket`]s for transmitting elsewhere.
 #[allow(clippy::len_without_is_empty)]
@@ -189,3 +195,5 @@ macro_rules! impl_extended_payload {
 impl_payload!(link_statistics, LinkStatistics);
 impl_payload!(rc_channels_packed, RcChannelsPacked);
 impl_extended_payload!(device_ping, DevicePing);
+impl_extended_payload!(device_info, DeviceInfo);
+impl_extended_payload!(parameter_read, ParameterRead);

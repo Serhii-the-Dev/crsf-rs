@@ -20,6 +20,7 @@ pub enum PacketAddress {
     Handset = 0xEA,
     Receiver = 0xEC,
     Transmitter = 0xEE,
+    ElrsLua = 0xEF,
 }
 
 // using 'static slices for config
